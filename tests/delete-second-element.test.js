@@ -113,7 +113,6 @@ test('Navigate and delete second element from favorites list using TV remote sim
     
     // Press Enter to confirm deletion
     await t.pressKey('enter');
-    //await t.wait(3000); // Wait for deletion to process
     
     console.log('[TEST] === Step 7: Verify Results ===');
     
@@ -155,8 +154,6 @@ test('Navigate and delete second element from favorites list using TV remote sim
     
     console.log('[TEST] ✅ TV OS Automation test completed successfully!');
     
-    // Take screenshot for documentation
-    await t.takeScreenshot('tv-os-automation-test-result.png');
 }).timeouts({
     pageLoadTimeout: 10000,     // Maximum time to wait for page load (10 seconds)
     pageRequestTimeout: 15000,  // Maximum time for the server to serve the page (15 seconds)
