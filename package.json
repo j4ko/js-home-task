@@ -1,0 +1,30 @@
+{
+  "name": "tv-os-automation-tests",
+  "version": "1.0.0",
+  "description": "Automated testing suite for TV OS simulation using TestCafe",
+  "main": "index.js",
+  "scripts": {
+    "test": "testcafe chrome tests/ --reporter spec,html:reports/test-results.html",
+    "test:headless": "testcafe chrome:headless tests/ --reporter spec,html:reports/test-results.html",
+    "test:firefox": "testcafe firefox tests/ --reporter spec,html:reports/test-results.html",
+    "test:single": "testcafe chrome tests/01-delete-favorite-apps.test.js --reporter spec,html:reports/test-results.html",
+    "test:debug": "testcafe chrome tests/ --debug-on-fail --reporter spec"
+  },
+  "keywords": [
+    "testcafe",
+    "automation",
+    "testing",
+    "qa",
+    "tv-os",
+    "e2e"
+  ],
+  "author": "QA Engineer",
+  "license": "MIT",
+  "devDependencies": {
+    "testcafe": "^3.6.2",
+    "testcafe-reporter-html": "^1.4.6"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
