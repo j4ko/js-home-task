@@ -70,11 +70,29 @@ export class RemoteControl {
 
     /**
      * Long press simulation (for context menus, delete options)
+     * Uses the working implementation from delete-second-element test
      */
-    async longPress(key = 'enter') {
-        // Simulate long press by holding the key for extended duration
-        await this.t.pressKey(key + ' ' + key + ' ' + key);
-        await this.t.wait(this.longPressDelay);
+    async longPress(targetSelector = '#favourite-apps', key = 'enter') {
+        // Simulate LONG PRESS using keyDown + wait + keyUp (proven working method)
+        await this.t.dispatchEvent(targetSelector, 'keydown', {
+            key: 'Enter',
+            code: 'Enter',
+            keyCode: 13,
+            which: 13,
+            bubbles: true
+        });
+        
+        await this.t.wait(2000); // Hold for 2 seconds to simulate long press
+        
+        await this.t.dispatchEvent(targetSelector, 'keyup', {
+            key: 'Enter',
+            code: 'Enter',
+            keyCode: 13,
+            which: 13,
+            bubbles: true
+        });
+        
+        await this.t.wait(this.navigationDelay);
         return this;
     }
 
