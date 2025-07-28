@@ -4,14 +4,7 @@
   "description": "Automated testing suite for TV OS simulation using TestCafe",
   "main": "index.js",
   "scripts": {
-    "test": "testcafe chrome tests/  --reporter spec,html:reports/test-results.html",
-    "test:headless": "testcafe chrome:headless tests/  --reporter spec,html:reports/test-results.html",
-    "test:firefox": "testcafe firefox tests/  --reporter spec,html:reports/test-results.html",
-    "test:single": "testcafe chrome tests/add-app-to-favourite.test.js  --reporter spec,html:reports/test-results.html",
-        "test:channel-page": "testcafe chrome tests/channel-page-available.test.js --experimental-multiple-windows --reporter spec,html:reports/test-results.html",
-    "test:debug": "testcafe chrome tests/ --debug-on-fail --reporter spec",
-    "test:all": "testcafe chrome tests/ --experimental-multiple-windows --reporter spec,html:reports/test-results.html",
-    "test:delete": "testcafe chrome tests/delete-second-element.test.js --reporter spec,html:reports/test-results.html"
+    "test:all": "testcafe tests/ --experimental-multiple-windows --reporter spec,html:reports/test-results.html"
   },
   "keywords": [
     "testcafe",
