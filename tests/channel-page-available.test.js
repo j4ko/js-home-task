@@ -1,6 +1,5 @@
 import { ClientFunction } from 'testcafe';
 import HomePage from '../pages/home-page';
-import ChannelsPage from '../pages/channels-page';
 
 const getCurrentUrl = ClientFunction(() => window.location.href);
 

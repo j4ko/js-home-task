@@ -3,7 +3,6 @@ import FavoritesPage from '../pages/favorites-page';
 fixture('TV OS Automation - Delete Favorite App')
     .beforeEach(async t => {
         // This will run before each test in this fixture
-        console.log('Starting test: Delete second element from favorites');
         // You can add setup steps here if needed, like logging in.
     });
 
@@ -12,13 +11,9 @@ test('Verify we can delete apps in the home page\'s favourite apps row', async t
     const initialAppsCount = await FavoritesPage.getFavoriteAppsCount();
     const initialApps = await FavoritesPage.getFavoriteApps();
     
-    console.log(`Initial number of favorite apps: ${initialAppsCount}`);
-    console.log(`Initial apps: ${initialApps.join(', ')}`);
-
     await t.expect(initialAppsCount).gte(2, 'There should be at least two apps to perform this test.');
 
     const appToDelete = initialApps[1];
-    console.log(`Attempting to delete: ${appToDelete}`);
 
     // 2. Navigate to the second app
     await t.pressKey('right');
