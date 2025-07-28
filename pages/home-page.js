@@ -1,10 +1,14 @@
+
 import { Selector, t } from 'testcafe';
-import FavoritesPage from './favorites-page.js';
 import ChannelsPage from './channels-page.js';
+
 
 class HomePage {
     constructor() {
-        this.favoritesSection = FavoritesPage;
+        this.favoriteAppsContainer = Selector('[data-testid="user-apps"]');
+        this.favoriteAppItems = this.favoriteAppsContainer.find('#favourite-apps').child('div');
+        this.deleteButtons = Selector('[data-testid="editmode-remove-app"]');
+        this.editOverlay = Selector('._overlay_15ypj_1');
     }
 
     /**
@@ -67,16 +71,70 @@ class HomePage {
             .wait(500)
             .pressKey('enter');
         
-        await t.expect(Selector('._genresGrid_swwug_1').exists).ok('Should navigate to the Search page', { timeout: 10000 });
+        await t.expect(Selector('#search-genres').exists).ok('Should navigate to the Search page', { timeout: 10000 });
     }
+
 
     /**
      * Gets the list of favorite apps from the home screen.
      * @returns {Promise<string[]>} A list of favorite application names.
      */
     async getFavoriteApps() {
-        // Delegate to the FavoritesPage to get the app names
-        return this.favoritesSection.getFavoriteApps();
+        await t.expect(this.favoriteAppsContainer.visible).ok('Favorites container should be visible', { timeout: 10000 });
+
+        const apps = [];
+        const count = await this.favoriteAppItems.count;
+        if (count === 0) {
+            return apps;
+        }
+
+        for (let i = 0; i < count; i++) {
+            const appItem = this.favoriteAppItems.nth(i);
+            const opacity = await appItem.getStyleProperty('opacity');
+            if (opacity !== '0') {
+                const appName = await appItem.getAttribute('data-testid');
+                apps.push(appName.trim());
+            }
+        }
+        return apps;
+    }
+
+    /**
+     * Gets the count of visible favorite apps.
+     * @returns {Promise<number>} The number of visible favorite apps.
+     */
+    async getFavoriteAppsCount() {
+        await t.expect(this.favoriteAppsContainer.visible).ok('Favorites container should be visible', { timeout: 10000 });
+        let visibleCount = 0;
+        const count = await this.favoriteAppItems.count;
+        for (let i = 0; i < count; i++) {
+            const appItem = this.favoriteAppItems.nth(i);
+            const opacity = await appItem.getStyleProperty('opacity');
+            if (opacity !== '0') {
+                visibleCount++;
+            }
+        }
+        return visibleCount;
+    }
+
+    /**
+     * Activa el modo de borrado de favoritos (long press Enter).
+     */
+    async activateDeleteMode() {
+        const focusableContainer = Selector('#favourite-apps');
+        await t.dispatchEvent(focusableContainer, 'keydown', { key: 'Enter', keyCode: 13 });
+        await t.wait(2000); // Hold duration
+        await t.dispatchEvent(focusableContainer, 'keyup', { key: 'Enter', keyCode: 13 });
+    }
+
+    /**
+     * Verifica si el modo de borrado está activo.
+     * @returns {Promise<boolean>}
+     */
+    async isDeleteModeActive() {
+        const deleteButtonsVisible = (await this.deleteButtons.count) > 0;
+        const overlayVisible = await this.editOverlay.visible;
+        return deleteButtonsVisible && overlayVisible;
     }
 }
 
