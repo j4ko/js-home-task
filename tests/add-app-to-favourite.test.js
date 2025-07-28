@@ -19,11 +19,13 @@ test('Add a non-favorite app to the favorites list', async t => {
     
     // Assert we are on the apps page
     await t.expect(getCurrentUrl()).contains('/page/499', 'Should navigate to the Apps page');
+    
 
     const appToAdd = await AppsPage.findNonFavoriteApp(initialFavorites);
     await t.expect(appToAdd).ok(`Should find a non-favorite app to add. Found: ${appToAdd}`);
     console.log(`Found non-favorite app to add: ${appToAdd}`);
 
+    await AppsPage.waitForBanner();
     await AppsPage.navigateToAndSelectApp(appToAdd);
     
     // The "Add to Favourites" button is focused by default. Press Enter to add.

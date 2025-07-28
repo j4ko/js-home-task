@@ -41,6 +41,8 @@ class AppsPage {
         // Navigate into the grid. The first 'down' focuses the banner, the second focuses the app grid.
         await t.pressKey('down');
         await t.wait(500);
+        await t.pressKey('down');
+        await t.wait(500);
 
         const maxAttempts = 80; // Increased attempts for more complex grid
         let lastFocusedAppName = '';
@@ -81,6 +83,15 @@ class AppsPage {
         }
 
         throw new Error(`Could not find or navigate to the app "${appName}" after ${maxAttempts} attempts.`);
+    }
+
+    /**
+     * Waits for the mini-banner to be visible on the Apps page.
+     */
+    async waitForBanner() {
+        const banner = Selector('[data-testid="mini-banner"]');
+        await t.expect(banner.exists).ok('The mini-banner should exist', { timeout: 10000 });
+        await t.expect(banner.visible).ok('The mini-banner should be visible', { timeout: 10000 });
     }
 }
 
