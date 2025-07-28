@@ -11,7 +11,17 @@ class FavoritesPage {
 
     async getFavoriteAppsCount() {
         await t.expect(this.favoriteAppsContainer.visible).ok('Favorites container should be visible', { timeout: 10000 });
-        return this.favoriteAppItems.count;
+        
+        let visibleCount = 0;
+        const count = await this.favoriteAppItems.count;
+        for (let i = 0; i < count; i++) {
+            const appItem = this.favoriteAppItems.nth(i);
+            const opacity = await appItem.getStyleProperty('opacity');
+            if (opacity !== '0') {
+                visibleCount++;
+            }
+        }
+        return visibleCount;
     }
 
     async getFavoriteApps() {
@@ -25,9 +35,13 @@ class FavoritesPage {
         }
 
         for (let i = 0; i < count; i++) {
-            // The app name is stored in the 'data-testid' attribute of each item.
-            const appName = await this.favoriteAppItems.nth(i).getAttribute('data-testid');
-            apps.push(appName.trim());
+            const appItem = this.favoriteAppItems.nth(i);
+            const opacity = await appItem.getStyleProperty('opacity');
+            
+            if (opacity !== '0') {
+                const appName = await appItem.getAttribute('data-testid');
+                apps.push(appName.trim());
+            }
         }
         return apps;
     }
