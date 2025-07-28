@@ -6,8 +6,7 @@ import FavoritesPage from '../pages/favorites-page.js';
 
 const getCurrentUrl = ClientFunction(() => window.location.href);
 
-fixture('TV OS Automation - Add App to Favorites')
-    .page('https://app.titanos.tv/');
+fixture('TV OS Automation - Add App to Favorites');
 
 test('Add a non-favorite app to the favorites list', async t => {
     // ARRANGE: Get the initial state

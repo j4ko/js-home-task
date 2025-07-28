@@ -1,7 +1,6 @@
 import FavoritesPage from '../pages/favorites-page';
 
 fixture('TV OS Automation - Delete Favorite App')
-    .page('https://app.titanos.tv/')
     .beforeEach(async t => {
         // This will run before each test in this fixture
         console.log('Starting test: Delete second element from favorites');
