@@ -39,7 +39,7 @@ class AppsPage {
      */
     async navigateToAndSelectApp(appName) {
         // Navigate into the grid. The first 'down' focuses the banner, the second focuses the app grid.
-        await t.pressKey('down').pressKey('down');
+        await t.pressKey('down');
         await t.wait(500);
 
         const maxAttempts = 80; // Increased attempts for more complex grid
