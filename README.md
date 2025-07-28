@@ -1,3 +1,39 @@
+
+## 🐳 Docker Usage
+
+You can run the tests in a fully isolated environment using Docker and the official TestCafe image. This avoids dependency issues and makes continuous integration easier.
+
+### Variables and Configuration
+- **BASE_URL**: Passed as an environment variable to the container and dynamically injected into `.testcaferc.json` by the entrypoint script. This way, you don't expose the URL in the repository.
+- **Reports**: The HTML report is generated in `/reports` inside the container. You must mount a volume to access the results from your machine.
+
+### Build the Image
+```sh
+docker build -t tvos-tests .
+```
+
+### Run the Tests
+```sh
+docker run --rm \
+  -e BASE_URL=https://app.titanos.tv/ \
+  -v $(pwd)/reports:/reports \
+  tvos-tests
+```
+
+- Change `https://app.titanos.tv/` to the URL you want to test.
+- The HTML report will be available at `./reports/test-results.html` after execution.
+
+### Technical Details
+- The entrypoint (`docker-entrypoint.sh`) overwrites the `baseUrl` value in `.testcaferc.json` before running the tests.
+- The executed command is `npm run test:all`, which generates the report at `/reports/test-results.html`.
+
+### Example: Open the Report
+Open the generated file after execution:
+```sh
+open ./reports/test-results.html
+```
+
+
 # TV OS Automation Project
 
 Professional TestCafe automation framework for testing TV OS functionality at https://app.titanos.tv/
@@ -42,6 +78,7 @@ npx testcafe firefox tests/
 npx testcafe safari tests/
 ```
 
+
 ## 🔧 Technical Implementation
 
 ### Core Functionality
@@ -79,6 +116,7 @@ await t.pressKey('down');   // Navigate to delete button
 await t.pressKey('enter');  // Confirm selection
 ```
 
+
 ## 📁 Project Structure
 
 ```
@@ -99,6 +137,7 @@ js-home-task/
 └── PROJECT_SUMMARY.md               # Detailed project summary
 ```
 
+
 ## 📊 Test Results
 
 ### Latest Execution
@@ -112,6 +151,7 @@ js-home-task/
 - **HTML Report**: `reports/test-results.html` - Comprehensive test report
 - **Screenshots**: `screenshots/tv-os-automation-test-result.png` - Visual evidence
 - **Console Logs**: Detailed step-by-step execution information
+
 
 ## 🔍 Key Discoveries
 
@@ -132,6 +172,7 @@ The successful deletion flow requires this exact sequence:
 - **App Titles**: `._itemTitle_10v6y_138` - Individual app elements
 - **Delete Buttons**: `[data-testid="editmode-remove-app"]` - Delete controls
 - **Overlay**: `._overlay_15ypj_1` - Delete mode overlay
+
 
 ## 🛠 Configuration
 
@@ -157,6 +198,7 @@ module.exports = {
 }
 ```
 
+
 ## 🧪 Extending the Tests
 
 ### Adding New Tests
@@ -174,6 +216,7 @@ const appIndex = 3; // Fourth app
 await t.pressKey('right right right'); // Navigate to fourth position
 ```
 
+
 ## 📋 Best Practices Implemented
 
 - **Page Object Model**: Encapsulated functionality in page classes
@@ -182,6 +225,7 @@ await t.pressKey('right right right'); // Navigate to fourth position
 - **Visual Evidence**: Screenshots for test verification
 - **Maintainable Code**: Clean, documented, and reusable structure
 
+
 ## 🎉 Success Criteria Met
 
 ✅ **TV Remote Simulation**: Full keyboard navigation implementation  
@@ -189,6 +233,7 @@ await t.pressKey('right right right'); // Navigate to fourth position
 ✅ **Delete Flow**: Complete app deletion workflow  
 ✅ **Professional Structure**: Industry-standard test architecture  
 ✅ **Comprehensive Testing**: Detailed verification and reporting  
+
 
 ## 📞 Support
 
@@ -201,103 +246,3 @@ For questions about this automation project:
 ---
 
 **Project Status**: ✅ Complete and Fully Functional
-3. **Search Categories**: Verify opening categories from the search page
-4. **Channels Page Access**: Verify channels page functionality
-
-## Prerequisites
-
-- Node.js (v14.0.0 or higher)
-- npm or yarn
-- Modern web browser (Chrome, Firefox)
-
-## Installation
-
-1. Clone this repository
-2. Navigate to the project directory
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-## Configuration
-
-**Important**: Before running the tests, you need to configure the application URL.
-
-1. Open `config/test-config.js`
-2. Replace the placeholder URL with the actual application URL:
-   ```javascript
-   baseUrl: 'https://app.titanos.tv/' // Replace with your target URL
-   ```
-
-## Running Tests
-
-### All Tests
-```bash
-npm test                    # Run all tests in Chrome with reports
-npm run test:headless       # Run all tests in headless Chrome
-npm run test:firefox        # Run all tests in Firefox
-```
-
-### Single Test
-```bash
-npm run test:single         # Run only the first test case
-```
-
-### Debug Mode
-```bash
-npm run test:debug          # Run tests with debug mode on failures
-```
-
-## Reports
-
-Test results are automatically generated in:
-- Console output (spec reporter)
-- HTML report: `reports/test-results.html`
-
-## Project Structure
-
-```
-├── config/
-│   └── test-config.js          # Test configuration and constants
-├── pages/
-│   ├── base-page.js            # Base page with common functionality
-│   ├── home-page.js            # Home page object model
-│   ├── apps-page.js            # Apps page object model
-│   ├── search-page.js          # Search page object model
-│   └── channels-page.js        # Channels page object model
-├── tests/
-│   ├── 01-delete-favorite-apps.test.js
-│   ├── 02-add-app-to-favorites.test.js
-│   ├── 03-open-search-category.test.js
-│   └── 04-channels-page-access.test.js
-├── utils/
-│   └── remote-control.js       # Remote control simulation utilities
-├── reports/                    # Test execution reports
-└── README.md
-```
-
-## Development Guidelines
-
-- Follow POM pattern for all page interactions
-- Use meaningful selector strategies
-- Implement proper wait mechanisms
-- Add detailed logging for debugging
-- Maintain consistent coding standards
-
-## Remote Control Navigation
-
-The tests simulate TV remote control behavior:
-- **Arrow Keys**: Navigation between elements
-- **Enter Key**: Selection/activation
-- **Long Press**: Simulated through key hold duration
-
-## Contributing
-
-1. Follow the established POM pattern
-2. Add comprehensive test documentation
-3. Ensure cross-browser compatibility
-4. Include proper error handling and assertions
-
-## Support
-
-For issues or questions, please refer to the test documentation or contact the QA team.
