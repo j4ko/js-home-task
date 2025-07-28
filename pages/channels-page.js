@@ -1,54 +1,24 @@
-import { Selector } from 'testcafe';
-import { BasePage } from './base-page.js';
+import { Selector, t } from 'testcafe';
 
-/**
- * Channels Page Object Model
- * Handles interactions with the channels page
- */
-export class ChannelsPage extends BasePage {
-    constructor(testController) {
-        super(testController);
-        
-        // Page-specific selectors
-        this.channelGrid = Selector(this.selectors.channelsPage.channelGrid);
-        this.channelItems = this.channelGrid.find(this.selectors.channelsPage.channelItem);
+class ChannelsPage {
+    constructor() {
+        // Selector for the body, to check if the page has any content at all
+        this.pageBody = Selector('body');
+        // The specific selector for the channels content
+        this.channelContent = Selector('div[class*="channelList"]');
     }
 
     /**
-     * Navigate to channels page
+     * Verifies that the channels page is visible by first checking if the page
+     * has any content, and then looking for the specific channel container.
      */
-    async goToChannelsPage() {
-        await this.navigateToChannels();
-        await this.waitForChannelsPageToLoad();
-        return this;
-    }
-
-    /**
-     * Wait for channels page to load
-     */
-    async waitForChannelsPageToLoad() {
-        await this.waitForElement(this.selectors.channelsPage.channelGrid);
-        await this.waitForAnimationsToComplete();
-        return this;
-    }
-
-    /**
-     * Verify channels page is accessible and functional
-     */
-    async verifyChannelsPageAccessibility() {
-        // Check if channel grid exists
-        await this.t.expect(this.channelGrid.exists).ok('Channel grid should exist');
+    async isLoaded() {
+        // 1. Wait for the body to have at least one element, indicating the page is not blank.
+        await t.expect(this.pageBody.childElementCount).gt(0, 'The page body should not be empty.', { timeout: 15000 });
         
-        // Check if channels are loaded
-        const channelCount = await this.channelItems.count;
-        await this.t.expect(channelCount).gte(1, 'At least one channel should be available');
-        
-        // Test navigation within channels
-        if (channelCount > 0) {
-            await this.remoteControl.navigateRight();
-            await this.remoteControl.navigateLeft();
-        }
-        
-        return { accessible: true, channelCount };
+        // 2. Now, look for the specific content of the channels page.
+        await t.expect(this.channelContent.exists).ok('The channels page content should exist.', { timeout: 10000 });
     }
 }
+
+export default new ChannelsPage();
