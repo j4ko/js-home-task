@@ -31,7 +31,7 @@ class SearchPage {
         
         // Navigate down into the genre grid
         await t.pressKey('down');
-        await t.wait(500);
+        await t.wait(250);
 
         const availableGenres = await this.getAvailableGenres();
         const randomIndex = Math.floor(Math.random() * availableGenres.length);

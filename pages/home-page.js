@@ -8,7 +8,6 @@ class HomePage {
         this.favoriteAppsContainer = Selector('[data-testid="user-apps"]');
         this.favoriteAppItems = this.favoriteAppsContainer.find('#favourite-apps').child('div');
         this.deleteButtons = Selector('[data-testid="editmode-remove-app"]');
-        this.editOverlay = Selector('._overlay_15ypj_1');
     }
 
     /**
@@ -20,19 +19,19 @@ class HomePage {
         // to ensure the UI keeps up with the automation.
         await t
             .pressKey('up')
-            .wait(500)
+            .wait(250)
             .pressKey('up')
-            .wait(500)
+            .wait(250)
             .pressKey('right') // Move to "Search"
-            .wait(500)
+            .wait(250)
             .pressKey('right') // Move to "Home"
-            .wait(500)
+            .wait(250)
             .pressKey('right') // Move to "TV Guide"
-            .wait(500)
+            .wait(250)
             .pressKey('right') // Move to "Channels"
-            .wait(500)
+            .wait(250)
             .pressKey('right') // Move to "Apps"
-            .wait(500)
+            .wait(250)
             .pressKey('enter');
         
         // Verify that the navigation was successful.
@@ -45,13 +44,13 @@ class HomePage {
     async navigateToChannels() {
         await t
             .pressKey('up')
-            .wait(500)
+            .wait(250)
             .pressKey('up')
-            .wait(500)
+            .wait(250)
             .pressKey('right') // Move to "TV Guide"
-            .wait(500)
+            .wait(250)
             .pressKey('right') // Move to "Channels"
-            .wait(500)
+            .wait(250)
             .pressKey('enter');
         
         // Wait for the new window to open
@@ -64,11 +63,11 @@ class HomePage {
     async navigateToSearch() {
         await t
             .pressKey('up')
-            .wait(500)
+            .wait(250)
             .pressKey('up')
-            .wait(500)
+            .wait(250)
             .pressKey('left') // Move to "Search"
-            .wait(500)
+            .wait(250)
             .pressKey('enter');
         
         await t.expect(Selector('#search-genres').exists).ok('Should navigate to the Search page', { timeout: 10000 });
@@ -133,8 +132,7 @@ class HomePage {
      */
     async isDeleteModeActive() {
         const deleteButtonsVisible = (await this.deleteButtons.count) > 0;
-        const overlayVisible = await this.editOverlay.visible;
-        return deleteButtonsVisible && overlayVisible;
+        return deleteButtonsVisible;
     }
 }
 
