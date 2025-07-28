@@ -15,12 +15,12 @@ docker build -t tvos-tests .
 ### Run the Tests
 ```sh
 docker run --rm \
-  -e BASE_URL=https://app.titanos.tv/ \
+  -e BASE_URL=<YOUR_TARGET_URL> \
   -v $(pwd)/reports:/reports \
   tvos-tests
 ```
 
-- Change `https://app.titanos.tv/` to the URL you want to test.
+- Replace `<YOUR_TARGET_URL>` with the URL you want to test (e.g., your deployed app or staging environment).
 - The HTML report will be available at `./reports/test-results.html` after execution.
 
 ### Technical Details
@@ -36,7 +36,7 @@ open ./reports/test-results.html
 
 # TV OS Automation Project
 
-Professional TestCafe automation framework for testing TV OS functionality at https://app.titanos.tv/
+Professional TestCafe automation framework for testing TV OS functionality at <YOUR_TARGET_URL>
 
 ## 🎯 Overview
 
