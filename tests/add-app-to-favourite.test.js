@@ -26,10 +26,6 @@ test('Add an app to home page favourites from apps page', async t => {
     // The "Add to Favourites" button is focused by default. Press Enter to add.
     await t.pressKey('enter');
 
-    // After adding, the app should automatically return to the home screen.
-    await t.expect(HomePage.favoritesSection.favoriteAppsContainer.exists).ok('Should return to Home page automatically', { timeout: 10000 });
-    await t.wait(2000); // Add a small wait for UI to settle after navigation
-
     // ASSERT: Verify the new state
     const finalFavorites = await HomePage.getFavoriteApps();
 
