@@ -1,4 +1,4 @@
-import FavoritesPage from '../pages/favorites-page';
+import HomePage from '../pages/home-page.js';
 
 fixture('TV OS Automation - Delete Favorite App')
     .beforeEach(async t => {
@@ -8,8 +8,8 @@ fixture('TV OS Automation - Delete Favorite App')
 
 test('Verify we can delete apps in the home page favourite apps row', async t => {
     // 1. Get initial state
-    const initialAppsCount = await FavoritesPage.getFavoriteAppsCount();
-    const initialApps = await FavoritesPage.getFavoriteApps();
+    const initialAppsCount = await HomePage.getFavoriteAppsCount();
+    const initialApps = await HomePage.getFavoriteApps();
 
     // console.log(`Initial number of favorite apps: ${initialAppsCount}`);
     // console.log(`Initial apps: ${initialApps.join(', ')}`);
@@ -22,8 +22,8 @@ test('Verify we can delete apps in the home page favourite apps row', async t =>
     await t.pressKey('right');
     
     // 3. Activate delete mode
-    await FavoritesPage.activateDeleteMode();
-    await t.expect(await FavoritesPage.isDeleteModeActive()).ok('Delete mode should be activated.');
+    await HomePage.activateDeleteMode();
+    await t.expect(await HomePage.isDeleteModeActive()).ok('Delete mode should be activated.');
     
     // 4. Navigate to delete button and confirm
     await t.pressKey('down');
@@ -33,8 +33,8 @@ test('Verify we can delete apps in the home page favourite apps row', async t =>
 
     // 5. Verify the app was deleted
 
-    const finalApps = await FavoritesPage.getFavoriteApps();
-    const finalAppsCount = await FavoritesPage.getFavoriteAppsCount();
+    const finalApps = await HomePage.getFavoriteApps();
+    const finalAppsCount = await HomePage.getFavoriteAppsCount();
     await t.expect(finalAppsCount).eql(initialAppsCount - 1, 'The number of visible favorite apps should decrease by one.');
 
     
