@@ -4,7 +4,7 @@ import SearchPage from '../pages/search-page';
 
 const getCurrentUrl = ClientFunction(() => window.location.href);
 
-fixture('TV OS Automation - Open Category from Search Page')
+fixture('TV OS - Open Category from Search Page')
     .disablePageCaching; // Best practice for speed and stability
 
 test('Navigate to Search page and open a random category', async t => {

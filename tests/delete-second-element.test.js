@@ -7,7 +7,7 @@ fixture('TV OS Automation - Delete Favorite App')
         // You can add setup steps here if needed, like logging in.
     });
 
-test('Navigate and delete the second element from the favorites list', async t => {
+test('Verify we can delete apps in the home page\'s favourite apps row', async t => {
     // 1. Get initial state
     const initialAppsCount = await FavoritesPage.getFavoriteAppsCount();
     const initialApps = await FavoritesPage.getFavoriteApps();

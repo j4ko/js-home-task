@@ -6,9 +6,9 @@ import FavoritesPage from '../pages/favorites-page.js';
 
 const getCurrentUrl = ClientFunction(() => window.location.href);
 
-fixture('TV OS Automation - Add App to Favorites');
+fixture('TV OS - Add App to Favorites');
 
-test('Add a non-favorite app to the favorites list', async t => {
+test('Add an app to home page favourites from apps page', async t => {
     // ARRANGE: Get the initial state
     const initialFavorites = await HomePage.getFavoriteApps();
     console.log(`Initial favorite apps for test: [${initialFavorites.join(', ')}]`);

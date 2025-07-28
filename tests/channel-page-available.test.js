@@ -4,10 +4,10 @@ import ChannelsPage from '../pages/channels-page';
 
 const getCurrentUrl = ClientFunction(() => window.location.href);
 
-fixture('TV OS Automation - Channel Page Available')
+fixture('TV OS - Channel Page Available')
     .disablePageCaching;
 
-test('Navigate to Channels section and verify page is available', async t => {
+test('Verify Channels page is available to use', async t => {
     // ACT: Navigate to the Channels page.
     await HomePage.navigateToChannels();
 
