@@ -13,7 +13,6 @@ RUN npm install
 # Copy only the test, page objects, utils y configuración necesaria
 COPY tests ./tests
 COPY pages ./pages
-COPY utils ./utils
 COPY package.json ./package.json
 COPY package-lock.json ./package-lock.json
 COPY .testcaferc.json ./.testcaferc.json
