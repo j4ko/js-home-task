@@ -6,10 +6,13 @@ fixture('TV OS Automation - Delete Favorite App')
         // You can add setup steps here if needed, like logging in.
     });
 
-test('Verify we can delete apps in the home page\'s favourite apps row', async t => {
+test('Verify we can delete apps in the home page favourite apps row', async t => {
     // 1. Get initial state
     const initialAppsCount = await FavoritesPage.getFavoriteAppsCount();
     const initialApps = await FavoritesPage.getFavoriteApps();
+
+    // console.log(`Initial number of favorite apps: ${initialAppsCount}`);
+    // console.log(`Initial apps: ${initialApps.join(', ')}`);
     
     await t.expect(initialAppsCount).gte(2, 'There should be at least two apps to perform this test.');
 
@@ -29,23 +32,15 @@ test('Verify we can delete apps in the home page\'s favourite apps row', async t
     await t.pressKey('enter');
 
     // 5. Verify the app was deleted
-    // NOTE: The following assertions are commented out. Although the test correctly executes
-    // the sequence of interactions to delete an app (activating delete mode, navigating to the
-    // delete button, and confirming), the change is not consistently reflected in the DOM
-    // when re-querying the list of favorites. The application that should have been deleted
-    // still appears in the list, causing the verification to fail.
-    // Various strategies have been explored (different event simulation methods,
-    // assertions with retries, semantic selectors) without resolving the underlying issue,
-    // which suggests a potential peculiarity in the application's state management.
-    // The test logic is kept to document the intended flow.
 
-    // await t.expect(FavoritesPage.favoriteAppItems.count).eql(initialAppsCount - 1, 'The number of apps should decrease by one.', { timeout: 5000 });
+    const finalApps = await FavoritesPage.getFavoriteApps();
+    const finalAppsCount = await FavoritesPage.getFavoriteAppsCount();
+    await t.expect(finalAppsCount).eql(initialAppsCount - 1, 'The number of visible favorite apps should decrease by one.');
 
-    // const finalApps = await FavoritesPage.getFavoriteApps();
-    // const finalAppsCount = finalApps.length;
-
-    // console.log(`Final number of favorite apps: ${finalAppsCount}`);
+    
     // console.log(`Final apps: ${finalApps.join(', ')}`);
+    // console.log(`Final number of favorite apps: ${finalAppsCount}`);
 
-    // await t.expect(finalApps.includes(appToDelete)).notOk(`The app "${appToDelete}" should have been deleted.`);
+
+    await t.expect(finalApps.includes(appToDelete)).notOk(`The app "${appToDelete}" should have been deleted.`);
 });
