@@ -52,11 +52,8 @@ class AppsPage {
             await t.expect(focusedItem.exists).ok(`No list item has data-focused="focused" on attempt ${i + 1}.`, { timeout: 5000 });
             
             const focusedAppName = await focusedItem.getAttribute('data-testid');
-            
-            console.log(`DEBUG: Attempt ${i + 1}: Focused app is "${focusedAppName}", searching for "${appName}"`);
 
             if (focusedAppName && focusedAppName.trim() === appName) {
-                console.log(`SUCCESS: Found app "${appName}". Selecting it.`);
                 await t.pressKey('enter');
                 return;
             }
@@ -71,7 +68,6 @@ class AppsPage {
 
             // If the focused app didn't change, we've likely hit the end of a row.
             if (lastFocusedAppName === newFocusedAppName) {
-                console.log('DEBUG: End of row detected. Moving to next row.');
                 await t.pressKey('down');
                 await t.wait(200);
                 // Move far left to ensure we are at the start of the new row.
