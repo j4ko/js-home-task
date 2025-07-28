@@ -1,0 +1,5 @@
+{
+    "browsers": "chrome",
+    "baseUrl": "https://app.titanos.tv/",
+    "skipJsErrors": true
+}
