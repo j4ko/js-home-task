@@ -2,8 +2,8 @@ import { Selector, t } from 'testcafe';
 
 class SearchPage {
     constructor() {
-        this.genresGrid = Selector('._genresGrid_swwug_1');
-        this.genreItems = this.genresGrid.find('._genre_swwug_1');
+        this.genresGrid = Selector('#search-genres');
+        this.genreItems = this.genresGrid.find('[role="listitem"]');
         this.focusedGenre = Selector('[data-focused="true"]');
     }
 
