@@ -1,16 +1,20 @@
-import { ClientFunction } from 'testcafe';
+import { ClientFunction, Selector } from 'testcafe';
 import HomePage from '../pages/home-page';
 import SearchPage from '../pages/search-page';
 
 const getCurrentUrl = ClientFunction(() => window.location.href);
 
 fixture('TV OS - Open Category from Search Page')
-    .disablePageCaching; // Best practice for speed and stability
+    .disablePageCaching(); // Best practice for speed and stability
 
 test('Navigate to Search page and open a random category', async t => {
     // ARRANGE: Navigate to the search page
     await HomePage.navigateToSearch();
-    await t.expect(getCurrentUrl()).contains('/search', 'Should be on the search page');
+    await t.expect(getCurrentUrl()).contains('/search', 'Should be on the search page', { timeout: 5000 });
+
+
+    // Ensure the genres grid exists and is visible before interacting
+    await SearchPage.waitForGenresGridVisible();
 
     // ACT: Select a random genre and get its name
     const selectedGenre = await SearchPage.selectRandomGenre();

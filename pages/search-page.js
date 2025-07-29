@@ -1,3 +1,4 @@
+
 import { Selector, t } from 'testcafe';
 
 class SearchPage {
@@ -8,11 +9,20 @@ class SearchPage {
     }
 
     /**
+     * Ensures the genres grid exists and is visible before interaction.
+     */
+    async waitForGenresGridVisible() {
+        await t.expect(this.genresGrid.exists).ok('The genres grid should exist', { timeout: 10000 });
+        await t.expect(this.genresGrid.visible).ok('The genres grid should be visible', { timeout: 10000 });
+    }
+
+    /**
      * Returns a list of all available genre names from the search page.
      * @returns {Promise<string[]>} An array of genre names.
      */
     async getAvailableGenres() {
         await t.expect(this.genresGrid.exists).ok('The genres grid should exist.', { timeout: 10000 });
+        await t.expect(this.genresGrid.visible).ok('The genres grid should be visible.', { timeout: 10000 });
         const genreCount = await this.genreItems.count;
         const genres = [];
         for (let i = 0; i < genreCount; i++) {
@@ -26,9 +36,14 @@ class SearchPage {
      * Selects a random genre from the grid.
      * @returns {Promise<string>} The name of the selected genre.
      */
-    async selectRandomGenre() {
+    async ensureGenresGridVisible() {
         await t.expect(this.genresGrid.exists).ok('The genres grid should exist.', { timeout: 10000 });
-        
+        await t.expect(this.genresGrid.visible).ok('The genres grid should be visible.', { timeout: 10000 });
+    }
+
+    async selectRandomGenre() {
+        await this.ensureGenresGridVisible();
+
         // Navigate down into the genre grid
         await t.pressKey('down');
         await t.wait(250);

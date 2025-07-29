@@ -12,19 +12,24 @@ class AppsPage {
      * @returns {Promise<string|null>} The name of the non-favorite app, or null if none is found.
      */
     async findNonFavoriteApp(favoriteApps) {
+        // Wait for the apps container to exist and be visible
         await t.expect(this.appsContainer.exists).ok('Apps container should exist', { timeout: 10000 });
-        const count = await this.appItems.count;
+        await t.expect(this.appsContainer.visible).ok('Apps container should be visible', { timeout: 10000 });
 
+        // Wait for at least one visible app item
+        const firstVisibleAppItem = this.appItems.with({ visibilityCheck: true }).nth(0);
+        await t.expect(firstVisibleAppItem.exists).ok('At least one app item should be visible', { timeout: 10000 });
+
+        const count = await this.appItems.count;
         for (let i = 0; i < count; i++) {
-            const appItem = this.appItems.nth(i);
+            const appItem = this.appItems.nth(i).with({ visibilityCheck: true });
+            if (!(await appItem.exists)) continue;
             const appName = await appItem.getAttribute('data-testid');
-            
             if (appName) {
                 const appNameTrimmed = appName.trim();
                 // Check if any favorite string contains the current app's name.
                 // This handles the "AppNameAppName" issue.
                 const isFavorite = favoriteApps.some(fav => fav.includes(appNameTrimmed));
-                
                 if (!isFavorite) {
                     return appNameTrimmed;
                 }

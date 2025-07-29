@@ -1,6 +1,7 @@
 import HomePage from '../pages/home-page.js';
 
 fixture('TV OS Automation - Delete Favorite App')
+    .disablePageCaching()
     .beforeEach(async t => {
         // This will run before each test in this fixture
         // You can add setup steps here if needed, like logging in.

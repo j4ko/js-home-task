@@ -4,7 +4,8 @@ import AppsPage from '../pages/apps-page.js';
 
 const getCurrentUrl = ClientFunction(() => window.location.href);
 
-fixture('TV OS - Add App to Favorites');
+fixture('TV OS - Add App to Favorites')
+    .disablePageCaching;
 
 test('Add an app to home page favourites from apps page', async t => {
     // ARRANGE: Get the initial state
@@ -15,12 +16,11 @@ test('Add an app to home page favourites from apps page', async t => {
     
     // Assert we are on the apps page
     await t.expect(getCurrentUrl()).contains('/page/499', 'Should navigate to the Apps page');
-    
+    await AppsPage.waitForBanner();
 
     const appToAdd = await AppsPage.findNonFavoriteApp(initialFavorites);
     await t.expect(appToAdd).ok(`Should find a non-favorite app to add. Found: ${appToAdd}`);
 
-    await AppsPage.waitForBanner();
     await AppsPage.navigateToAndSelectApp(appToAdd);
     
     // The "Add to Favourites" button is focused by default. Press Enter to add.
@@ -32,7 +32,6 @@ test('Add an app to home page favourites from apps page', async t => {
     await t.expect(finalFavorites.length).gt(initialFavorites.length, 'The number of favorite apps should increase.');
     
     // Use `some` to check if any final favorite contains the added app's name as a substring.
-    // This is more robust against potential DOM issues like duplicated text nodes.
     const isAppAdded = finalFavorites.some(fav => fav.includes(appToAdd));
     await t.expect(isAppAdded).ok(`The new app "${appToAdd}" should be in the favorites list.`);
 });

@@ -15,62 +15,79 @@ class HomePage {
      * This sequence is based on the navigation flow observed in the application.
      */
     async navigateToApps() {
-        // Reverting to a more direct navigation sequence with generous waits
-        // to ensure the UI keeps up with the automation.
-        await t
-            .pressKey('up')
-            .wait(250)
-            .pressKey('up')
-            .wait(250)
-            .pressKey('right') // Move to "Search"
-            .wait(250)
-            .pressKey('right') // Move to "Home"
-            .wait(250)
-            .pressKey('right') // Move to "TV Guide"
-            .wait(250)
-            .pressKey('right') // Move to "Channels"
-            .wait(250)
-            .pressKey('right') // Move to "Apps"
-            .wait(250)
-            .pressKey('enter');
-        
+        // Navigate to the Apps button in the main menu
+        await t.pressKey('up').wait(250);
+        await t.pressKey('up').wait(250);
+        // Move right until #menu-item-6 is focused
+        let maxAttempts = 10;
+        let focusedMenuItem = Selector('#menu-item-6[data-focused="focused"]');
+        for (let i = 0; i < maxAttempts; i++) {
+            if (await focusedMenuItem.exists) {
+                break;
+            }
+            await t.pressKey('right').wait(250);
+        }
+        // Ensure we are on the correct button
+        await t.expect(focusedMenuItem.exists).ok('Focus should be on the Apps button (#menu-item-6)');
+        await t.pressKey('enter');
         // Verify that the navigation was successful.
         await t.expect(Selector('[data-testid="lists-container"]').exists).ok('Should navigate to the Apps page', { timeout: 10000 });
     }
 
     /**
-     * Navigates to the "Channels" page from the home page's main menu.
+     * Navigates to the "Channels" page by clicking the corresponding button,
+     * asegurando que el elemento existe y es visible antes del click.
      */
     async navigateToChannels() {
-        await t
-            .pressKey('up')
-            .wait(250)
-            .pressKey('up')
-            .wait(250)
-            .pressKey('right') // Move to "TV Guide"
-            .wait(250)
-            .pressKey('right') // Move to "Channels"
-            .wait(250)
-            .pressKey('enter');
-        
-        // Wait for the new window to open
-        await t.wait(3000);
+        await t.pressKey('up').wait(250);
+        await t.pressKey('up').wait(250);
+        // IDs of the top menu items
+        const targetIndex = 3; // Channels
+        const menuItemSelector = (idx) => Selector(`#menu-item-${idx}`);
+        // Find the currently focused index
+        let focusedIndex = -1;
+        for (let i = 0; i <= 6; i++) {
+            const el = menuItemSelector(i);
+            if (await el.getAttribute('data-focused') === 'true') {
+                focusedIndex = i;
+                break;
+            }
+        }
+        // Si no se encuentra, fallback a Home (1)
+        if (focusedIndex === -1) focusedIndex = 1;
+
+        // Calcula desplazamiento
+        let direction = targetIndex > focusedIndex ? 'right' : 'left';
+        let steps = Math.abs(targetIndex - focusedIndex);
+        for (let i = 0; i < steps; i++) {
+            await t.pressKey(direction).wait(250);
+        }
+        // Verify that the focus is on Channels
+        const focusedMenuItem = menuItemSelector(targetIndex).withAttribute('data-is-focused', 'true');
+        await t.expect(focusedMenuItem.exists).ok('Focus must be on the Channels button (#menu-item-3)');
+        await t.pressKey('enter');
+        // Espera breve para permitir la apertura de la nueva ventana
+        await t.wait(1000);
     }
 
     /**
      * Navigates to the "Search" page from the home page's main menu.
      */
     async navigateToSearch() {
-        await t
-            .pressKey('up')
-            .wait(250)
-            .pressKey('up')
-            .wait(250)
-            .pressKey('left') // Move to "Search"
-            .wait(250)
-            .pressKey('enter');
-        
-        await t.expect(Selector('#search-genres').exists).ok('Should navigate to the Search page', { timeout: 10000 });
+        await t.pressKey('up').wait(250);
+        await t.pressKey('up').wait(250);
+        // Move left until #menu-item-0 is focused
+        let maxAttempts = 10;
+        let focusedMenuItem = Selector('#menu-item-0[data-focused="focused"]');
+        for (let i = 0; i < maxAttempts; i++) {
+            if (await focusedMenuItem.exists) {
+                break;
+            }
+            await t.pressKey('left').wait(250);
+        }
+        // Ensure we are on the correct button
+        await t.pressKey('enter');
+        await t.wait(3000);
     }
 
 
@@ -127,7 +144,7 @@ class HomePage {
     }
 
     /**
-     * Verifica si el modo de borrado está activo.
+     * Checks if the delete mode is active.
      * @returns {Promise<boolean>}
      */
     async isDeleteModeActive() {
