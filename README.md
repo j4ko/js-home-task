@@ -17,6 +17,8 @@ cd js-home-task
 npm install
 ```
 
+> If you use this repository's `package.json`, TestCafe is already listed as a dev dependency, so `npm install` is usually enough.
+
 #### Install TestCafe (if not already installed)
 
 You can install TestCafe either globally or locally:
@@ -28,13 +30,10 @@ You can install TestCafe either globally or locally:
 - **Local installation** (recommended for CI and project isolation):
   ```bash
   npm install --save-dev testcafe
-  ```
-
-> If you use this repository's `package.json`, TestCafe is already listed as a dev dependency, so `npm install` is usually enough.
+  ``
 
 
-
-### Configuration (optional)
+### Configuration 
 If you need to change the application URL under test:
 1. Open the file `.testcaferc.json` in the project root.
 2. Edit the `baseUrl` value to match your environment:
