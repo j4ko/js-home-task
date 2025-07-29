@@ -3,7 +3,7 @@
 ### Prerequisites
 - Node.js (v14 or higher)
 - npm (comes with Node.js)
-- Modern browser (Chrome recommended, Firefox and Safari also supported)
+- Chrome browser 
 
 
 
@@ -51,7 +51,6 @@ If you need to change the application URL under test:
 ```bash
 # Run all tests in Chrome with HTML report
 npm run test:all
-
 
 > **Note:** HTML reports are automatically generated in `reports/test-results.html` after each run.
 
