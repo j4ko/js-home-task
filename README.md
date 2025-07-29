@@ -64,8 +64,4 @@ npm run test:all
 - No extra configuration or environment variables required.
 
 ---
-> **Note:** HTML reports are automatically generated in `reports/test-results.html` after each run.
-
-
----
 
