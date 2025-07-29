@@ -36,17 +36,8 @@ You can install TestCafe either globally or locally:
 ### Running tests
 ```bash
 # Run all tests in Chrome with HTML report
-npx testcafe chrome tests/ --experimental-multiple-windows --reporter spec,html:reports/test-results.html
+npm run test:all
 
-# Run all tests in headless mode (no UI)
-npm run test:headless
-
-# Run all tests in Firefox
-npm run test:firefox
-
-# Run a specific test file (example)
-npx testcafe chrome tests/delete-second-element.test.js
-```
 
 > **Note:** HTML reports are automatically generated in `reports/test-results.html` after each run.
 
