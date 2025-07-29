@@ -44,7 +44,7 @@ class AppsPage {
         await t.pressKey('down');
         await t.wait(250);
 
-        const maxAttempts = 100; // Increased attempts for more complex grid
+        const maxAttempts = 120; // Increased attempts for more complex grid
         let lastFocusedAppName = '';
 
         for (let i = 0; i < maxAttempts; i++) {
