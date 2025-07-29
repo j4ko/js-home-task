@@ -4,6 +4,15 @@ import ChannelsPage from './channels-page.js';
 
 
 class HomePage {
+    /**
+     * Confirms the deletion of a favorite app by navigating to the delete button and confirming the dialog.
+     */
+    async confirmDeleteFavoriteApp() {
+        await t.pressKey("down");
+        await t.pressKey("enter");
+        await t.wait(1000); // Wait for confirmation dialog
+        await t.pressKey("enter");
+    }
     constructor() {
         this.favoriteAppsContainer = Selector('[data-testid="user-apps"]');
         this.favoriteAppItems = this.favoriteAppsContainer.find('#favourite-apps').child('div');
