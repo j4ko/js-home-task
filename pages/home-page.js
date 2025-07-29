@@ -36,7 +36,7 @@ class HomePage {
 
     /**
      * Navigates to the "Channels" page by clicking the corresponding button,
-     * asegurando que el elemento existe y es visible antes del click.
+     * ensuring the element exists and is visible before clicking.
      */
     async navigateToChannels() {
         await t.pressKey('up').wait(250);
@@ -53,10 +53,10 @@ class HomePage {
                 break;
             }
         }
-        // Si no se encuentra, fallback a Home (1)
+        // If not found, fallback to Home (1)
         if (focusedIndex === -1) focusedIndex = 1;
 
-        // Calcula desplazamiento
+        // Calculate offset
         let direction = targetIndex > focusedIndex ? 'right' : 'left';
         let steps = Math.abs(targetIndex - focusedIndex);
         for (let i = 0; i < steps; i++) {
@@ -66,7 +66,7 @@ class HomePage {
         const focusedMenuItem = menuItemSelector(targetIndex).withAttribute('data-is-focused', 'true');
         await t.expect(focusedMenuItem.exists).ok('Focus must be on the Channels button (#menu-item-3)');
         await t.pressKey('enter');
-        // Espera breve para permitir la apertura de la nueva ventana
+        // Short wait to allow the new window to open
         await t.wait(1000);
     }
 
@@ -134,7 +134,7 @@ class HomePage {
     }
 
     /**
-     * Activa el modo de borrado de favoritos (long press Enter).
+     * Activates the delete mode for favorites (long press Enter).
      */
     async activateDeleteMode() {
         const focusableContainer = Selector('#favourite-apps');
