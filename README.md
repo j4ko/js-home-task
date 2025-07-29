@@ -33,14 +33,6 @@ You can install TestCafe either globally or locally:
 > If you use this repository's `package.json`, TestCafe is already listed as a dev dependency, so `npm install` is usually enough.
 
 
-### Running tests
-```bash
-# Run all tests in Chrome with HTML report
-npm run test:all
-
-
-> **Note:** HTML reports are automatically generated in `reports/test-results.html` after each run.
-
 
 ### Configuration (optional)
 If you need to change the application URL under test:
@@ -55,6 +47,14 @@ If you need to change the application URL under test:
    ```
 
 ---
+### Running tests
+```bash
+# Run all tests in Chrome with HTML report
+npm run test:all
+
+
+> **Note:** HTML reports are automatically generated in `reports/test-results.html` after each run.
+
 
 ## 🛠️ Portability notes
 
@@ -62,10 +62,6 @@ If you need to change the application URL under test:
 - You only need Node.js and a compatible browser installed.
 - All commands work on any OS with a standard terminal.
 - No extra configuration or environment variables required.
-
----
-> **Note:** HTML reports are automatically generated in `reports/test-results.html` after each run.
-
 
 ---
 
