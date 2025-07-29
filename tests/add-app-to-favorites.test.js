@@ -11,6 +11,9 @@ test("Add an app to home page favourites from apps page", async (t) => {
     // Get the initial list of favorite apps
     const initialFavorites = await HomePage.getFavoriteApps();
 
+    // Wait for the Apps element to exist and be visible before navigating to the search page
+    await HomePage.waitForMenuAppsVisible();
+
     // Navigate to the Apps page from the home page
     await HomePage.navigateToApps();
 

@@ -8,6 +8,8 @@ const getCurrentUrl = ClientFunction(() => window.location.href);
 fixture("TV OS - Open Category from Search Page").disablePageCaching; // Best practice for speed and stability
 
 test("Navigate to Search page and open a random category", async (t) => {
+    // Wait for the #search element to exist and be visible before navigating to the search page
+    await HomePage.waitForMenuSearchVisible();
     // Navigate to the search page from the home page
     await HomePage.navigateToSearch();
 

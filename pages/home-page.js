@@ -5,6 +5,22 @@ import ChannelsPage from './channels-page.js';
 
 class HomePage {
     /**
+     * Waits for the #menu-item-0 element to exist and be visible on the page.
+     */
+    async waitForMenuSearchVisible() {
+        const menuItem0 = Selector('#menu-item-0');
+        await t.expect(menuItem0.exists).ok('Menu item #menu-item-0 should exist', { timeout: 10000 });
+        await t.expect(menuItem0.visible).ok('Menu item #menu-item-0 should be visible', { timeout: 10000 });
+    }
+    /**
+     * Waits for the #menu-item-0 element to exist and be visible on the page.
+     */
+    async waitForMenuAppsVisible() {
+        const menuItem0 = Selector('#menu-item-6');
+        await t.expect(menuItem0.exists).ok('Menu item #menu-item-0 should exist', { timeout: 10000 });
+        await t.expect(menuItem0.visible).ok('Menu item #menu-item-0 should be visible', { timeout: 10000 });
+    }
+    /**
      * Confirms the deletion of a favorite app by navigating to the delete button and confirming the dialog.
      */
     async confirmDeleteFavoriteApp() {
