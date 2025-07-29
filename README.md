@@ -66,12 +66,6 @@ If you need to change the application URL under test:
 ---
 > **Note:** HTML reports are automatically generated in `reports/test-results.html` after each run.
 
-## 🛠️ Notas de portabilidad
-
-- El proyecto es multiplataforma (Windows, macOS, Linux).
-- Solo necesitas Node.js y un navegador compatible instalado.
-- All commands work on any operating system with a standard terminal.
-- No additional configuration or special environment variables are required.
 
 ---
 
